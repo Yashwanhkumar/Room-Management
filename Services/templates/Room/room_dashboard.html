@@ -22,7 +22,7 @@
                 {% if is_owner %}
                 <a href="{% url 'room_owner_dashboard' room.id %}" class="btn btn-warning me-2"><i class="fas fa-chart-line me-1"></i> Owner Dashboard</a>
                 {% endif %}
-                <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#addServiceModal"><i class="fas fa-plus me-1"></i> Add Service</button>
+                <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#addServiceModal"><i class="fas fa-plus me-1"></i> Add Entry</button>
                 <a href="{% url 'logout' %}" class="btn btn-outline-secondary">Logout <i class="fas fa-sign-out-alt ms-1"></i></a>
             </div>
         </header>
@@ -34,10 +34,14 @@
             <p class="mb-0"><strong>Invite Code:</strong> <code>{{ room.invite_code }}</code></p>
         </div>
         {% endif %}
+         <!-- Welcome Message -->
+        <div class="text-center mb-4">
+            <h4 class="fw-bold">Welcome back, {{ user.username }}!</h4>
+        </div>
 
         <div class="row g-4">
             <div class="col-lg-8">
-                <h4 class="mb-4">Services in this Room</h4>
+                <h4 class="mb-4">Entries in this Room</h4>
                 <div class="row">
                     {% for service in services %}
                     <div class="col-md-6 mb-4">
@@ -96,21 +100,21 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add a New Service to {{ room.name }}</h5>
+                    <h5 class="modal-title">Add a New Entries to {{ room.name }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form method="POST" action="{% url 'room_dashboard' room.id %}">
                         {% csrf_token %}
                         <div class="mb-3">
-                            <label for="serviceName" class="form-label">Service Name</label>
+                            <label for="serviceName" class="form-label">Entry Name</label>
                             <input type="text" class="form-control" name="serviceName" required>
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
                             <textarea class="form-control" name="description" rows="3" required></textarea>
                         </div>
-                        <div class="d-grid"><button type="submit" class="btn btn-success">Submit Service</button></div>
+                        <div class="d-grid"><button type="submit" class="btn btn-success">Submit Entry</button></div>
                     </form>
                 </div>
             </div>

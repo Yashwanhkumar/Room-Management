@@ -27,11 +27,20 @@ class Allservices(models.Model):
     def __str__(self):
         return self.service_name
 
+
 class ServiceRecord(models.Model):
-    """Stores individual records for a service, including cost."""
-    service = models.ForeignKey(Allservices, on_delete=models.CASCADE, related_name='records')
+    """
+    Stores individual records for a service, now with user tracking.
+    """
+    service = models.ForeignKey('Allservices', on_delete=models.CASCADE, related_name='records')
     description = models.TextField()
     cost = models.DecimalField(max_digits=10, decimal_places=2)
+
+    # --- Add these new fields ---
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='created_records')
+    updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
+                                   related_name='updated_records')
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

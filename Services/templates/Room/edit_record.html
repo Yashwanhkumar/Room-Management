@@ -55,9 +55,9 @@
                                 <textarea class="form-control" id="description" name="description" rows="4" required>{{ record.description }}</textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="cost" class="form-label">Cost ($)</label>
+                                <label for="cost" class="form-label">Cost (₹)</label>
                                 <!-- The 'value' attribute is pre-filled with the existing data -->
-                                <input type="number" step="0.01" class="form-control" id="cost" name="cost" value="{{ record.cost|stringformat:'f' }}" required>
+                                <input type="number" step="0.01" class="form-control" id="cost" name="cost" value="{{ record.cost|floatformat:'2' }}" required>
                             </div>
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-success">

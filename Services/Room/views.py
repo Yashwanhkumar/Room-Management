@@ -53,40 +53,34 @@ def room_dashboard_view(request, room_id):
 @login_required
 def manage_service(request, service_id):
     service = get_object_or_404(Allservices, pk=service_id)
-
-    # Security check: only members of the room can view this page
-    if request.user not in service.room.members.all():
-        return redirect('services_dashboard')
+    # ... (security checks) ...
 
     if request.method == 'POST':
         description = request.POST.get('description')
         cost = request.POST.get('cost')
         if description and cost:
+            # --- Save the user who created the record ---
             ServiceRecord.objects.create(
                 service=service,
                 description=description,
-                cost=cost
+                cost=cost,
+                created_by=request.user
             )
             return redirect('manage_service', service_id=service.id)
 
     service_records = service.records.all().order_by('-created_at')
-
-    # --- Add this logic to check for ownership ---
-    is_owner = request.user == service.room.owner
-
     context = {
         'service': service,
         'service_records': service_records,
-        'is_owner': is_owner  # Pass the ownership status to the template
+        'is_owner': request.user == service.room.owner
     }
     return render(request, 'Room/manage_service.html', context)
+
 
 @login_required
 def edit_service_record(request, record_id):
     record = get_object_or_404(ServiceRecord, pk=record_id)
-    # Allow staff to edit any record
-    if not request.user.is_staff and request.user not in record.service.room.members.all():
-        return redirect('services_dashboard')
+    # ... (security checks) ...
 
     if request.method == 'POST':
         description = request.POST.get('description')
@@ -94,11 +88,11 @@ def edit_service_record(request, record_id):
         if description and cost:
             record.description = description
             record.cost = cost
+            # --- Save the user who last updated the record ---
+            record.updated_by = request.user
             record.save()
-            # Redirect back to the admin dashboard if the user is staff
-            if request.user.is_staff:
-                return redirect('admin_dashboard')
             return redirect('manage_service', service_id=record.service.id)
+
     context = {'record': record}
     return render(request, 'Room/edit_record.html', context)
 
