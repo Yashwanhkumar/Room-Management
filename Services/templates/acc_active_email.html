@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Verify Your Email Address</title>
+</head>
+<body style="height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; background-color: #f0f2f5;">
+    <div class="container" style="padding: 20px;">
+        <div class="card" style="background-color: #ffffff; border-radius: 12px; margin: 0 auto; max-width: 600px; padding: 40px; box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);">
+            <div class="header" style="text-align: center; padding-bottom: 20px; border-bottom: 1px solid #e9ecef;">
+                <h1 style="font-size: 24px; font-weight: 700; color: #333333; margin: 0;">Email Verification</h1>
+            </div>
+            <div class="content" style="padding: 30px 0; font-size: 16px; line-height: 1.6; color: #555555;">
+                <p style="margin: 0 0 20px 0;">Hi {{ user.username }},</p>
+                <p style="margin: 0 0 20px 0;">Thank you for registering! Please click the button below to verify your email address and activate your account.</p>
+
+                <div class="button-container" style="text-align: center; padding: 20px 0;">
+                    <!-- The activation link from your Django backend goes here -->
+                    <a href="{{ activation_link }}" class="button" style="background-color: #0d6efd; border-radius: 6px; color: #ffffff; display: inline-block; font-size: 16px; font-weight: 600; padding: 15px 30px; text-decoration: none;">Activate Your Account</a>
+                </div>
+
+                <p style="margin: 0 0 20px 0;">If the button above doesn't work, copy and paste the following link into your web browser:</p>
+                <p style="margin: 0 0 20px 0;"><a href="{{ activation_link }}">{{ activation_link }}</a></p>
+            </div>
+            <div class="footer" style="text-align: center; font-size: 14px; color: #999999; padding-top: 20px; border-top: 1px solid #e9ecef;">
+                <p style="margin: 0 0 20px 0;">If you didn't register on our site, please ignore this email.</p>
+                <p style="margin: 0 0 20px 0;">&copy; {% now "Y" %} Your Company Name. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
